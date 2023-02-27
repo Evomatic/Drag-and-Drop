@@ -1,0 +1,20 @@
+{
+  "name": "drag-and-drop",
+  "version": "1.0.0",
+  "description": "A simple drag and drop project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "server",
+    "watch": "tsc -w"
+  },
+  "keywords": [
+    "typescript",
+    "course"
+  ],
+  "author": "Evan Trujillo",
+  "license": "ISC",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}
