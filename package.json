@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx serve",
     "watch": "tsc -w",
-    "lint": "eslint --ext .ts src/"
+    "lint": "eslint --ext .ts src/",
+    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "keywords": [
     "typescript",
@@ -19,6 +20,8 @@
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.54.0",
     "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.4",
     "serve": "^14.2.0",
     "typescript": "^4.9.5"
