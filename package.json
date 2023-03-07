@@ -5,10 +5,11 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx serve",
+    "start": "serve",
     "watch": "tsc -w",
     "lint": "eslint --ext .ts src/",
-    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "less": "lessc src/app.less dist/app.css"
   },
   "keywords": [
     "typescript",
