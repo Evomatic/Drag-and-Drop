@@ -10,120 +10,127 @@ html {
     @white: white;
     @blue: #0044ff;
 
-    margin: 0;
+    #app {
+      display: flex;
 
-    label,
-    input,
-    textarea {
-      display: block;
-      margin: 0.5rem 0;
-    }
-
-    label {
-      font-weight: bold;
-    }
-
-    input,
-    textarea {
-      font: inherit;
-      padding: 0.2rem 0.4rem;
-      width: 100%;
-      max-width: 30rem;
-      border: 1px solid #ccc;
-
-      &:focus {
-        outline: none;
-        background: #fff5f9;
-      }
-    }
-
-    button {
-      font: inherit;
-      background: @red;
-      border: 1px solid @red;
-      cursor: pointer;
-      color: @white;
-      padding: 0.75rem 1rem;
-
-      &:focus {
-        outline: none;
+      form {
+        align-self: center;
       }
 
-      &:hover, &:active {
-        @deep-pink: #a80041;
-
-        background: @deep-pink;
-        border-color: @deep-pink;
-      }
-    }
-
-    .projects {
-      margin: 1rem;
-      border: 1px solid @red;
-
-      header {
-        background: @red;
-        height: 3.5rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      h2 {
-        margin: 0;
-        color: @white;
-      }
-
-      ul {
-        list-style: none;
-        margin: 0;
-        padding: 1rem;
-      }
-
-      li {
-        box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.26);
-        padding: 1rem;
-        margin: 1rem;
-      }
-
-      li h2 {
-        color: @red;
+      label,
+      input,
+      textarea {
+        display: block;
         margin: 0.5rem 0;
       }
 
-      li h3 {
-        color: #575757;
-        font-size: 1rem;
+      label {
+        font-weight: bold;
       }
-    }
 
-    #finished-projects {
-      border-color: @blue;
+      input,
+      textarea {
+        font: inherit;
+        padding: 0.2rem 0.4rem;
+        width: 100%;
+        max-width: 30rem;
+        border: 1px solid #ccc;
 
-      header,
-      li,
-      h2 {
-        background: @blue;
+        &:focus {
+          outline: none;
+          background: #fff5f9;
+        }
+      }
+
+      button {
+        font: inherit;
+        background: @red;
+        border: 1px solid @red;
+        cursor: pointer;
+        color: @white;
+        padding: 0.75rem 1rem;
+
+        &:focus {
+          outline: none;
+        }
+
+        &:hover,
+        &:active {
+          @deep-pink: #a80041;
+
+          background: @deep-pink;
+          border-color: @deep-pink;
+        }
+      }
+
+      .projects {
+        margin: 1rem;
+        border: 1px solid @red;
+
+        header {
+          background: @red;
+          height: 3.5rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        h2 {
+          margin: 0;
+          color: @white;
+        }
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 1rem;
+        }
+
+        li {
+          box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.26);
+          padding: 1rem;
+          margin: 1rem;
+        }
+
+        li h2 {
+          color: @red;
+          margin: 0.5rem 0;
+        }
+
+        li h3 {
+          color: #575757;
+          font-size: 1rem;
+        }
+      }
+
+      #finished-projects {
+        border-color: @blue;
+
+        header,
+        li,
+        h2 {
+          background: @blue;
+        }
+
+        .droppable {
+          background: #d6e1ff;
+        }
+      }
+
+      .project li p {
+        margin: 0;
       }
 
       .droppable {
-        background: #d6e1ff;
+        background: #ffe3ee;
       }
-    }
 
-    .project li p {
-      margin: 0;
-    }
-
-    .droppable {
-      background: #ffe3ee;
-    }
-
-    #user-input {
-      margin: 1rem;
-      padding: 1rem;
-      border: 1px solid @red;
-      background: #f7f7f7;
+      #user-input {
+        margin: 1rem;
+        padding: 1rem;
+        border: 1px solid @red;
+        background: #f7f7f7;
+      }
     }
   }
 }
