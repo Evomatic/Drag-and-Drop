@@ -1,11 +1,20 @@
-function render() {
+function render(elementId: string, insertPosition: InsertPosition): void {
   const templateElement = document.getElementById(
-    'project-input'
+    elementId
   ) as HTMLTemplateElement;
   const hostElement = document.getElementById('app') as HTMLDivElement;
   const importNode = document.importNode(templateElement.content, true);
   const element = importNode.firstElementChild as HTMLFormElement;
-  hostElement.insertAdjacentElement('afterbegin', element);
+  hostElement.insertAdjacentElement(insertPosition, element);
 }
 
-render();
+function projectInput(): void {
+  render('project-input', 'afterbegin');
+}
+
+function activeProjectList(): void {
+  render('project-list', 'beforeend');
+}
+
+projectInput();
+activeProjectList();
