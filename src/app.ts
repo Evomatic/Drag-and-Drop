@@ -1,11 +1,4 @@
 class ProjectBase {
-  getElementValue(elementId: string, eventListener: string) {
-    const elements = <HTMLInputElement>document.getElementById(elementId);
-    elements.addEventListener(eventListener, (event) => {
-      const result = <HTMLInputElement>event.target;
-      console.log(result.value);
-    });
-  }
   render(getElementById: string, elementPosition: InsertPosition): void {
     const templateElement = document.getElementById(
       getElementById
@@ -21,7 +14,16 @@ class ProjectInput extends ProjectBase {
   constructor() {
     super();
     this.render('project-input', 'afterbegin');
-    this.getElementValue('title', 'input');
+  }
+
+  formSubmit() {
+    document
+      .getElementById('submit-btn')
+      ?.addEventListener('click', (event) => {
+        event.preventDefault();
+        (document.getElementById('myForm') as HTMLFormElement)?.onSubmit();
+        alert('New project submitted!');
+      });
   }
 }
 class ActiveProjectList extends ProjectBase {
@@ -32,4 +34,5 @@ class ActiveProjectList extends ProjectBase {
 }
 
 const projectInput = new ProjectInput();
+projectInput.formSubmit();
 const activeProjectList = new ActiveProjectList();
