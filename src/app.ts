@@ -1,3 +1,11 @@
+type ProjectInputData = {
+  title: string;
+  description: string;
+  people: number;
+};
+
+type ProjectFormData = ProjectInputData & FormData;
+
 class ProjectBase {
   render(getElementById: string, elementPosition: InsertPosition): void {
     const templateElement = document.getElementById(
@@ -16,14 +24,28 @@ class ProjectInput extends ProjectBase {
     this.render('project-input', 'afterbegin');
   }
 
+  addProject() {
+    const newElement = document.createElement('li');
+    const newContent = document.createTextNode('Hi there and greetings!');
+    newElement.appendChild(newContent);
+    const currentDiv = document.getElementById('#ul');
+    document.body.insertBefore(newElement, currentDiv);
+  }
+
+  getFormData() {
+    const form = document.querySelector('#project-form') as HTMLFormElement;
+    const formData: ProjectFormData = new FormData(form) as ProjectFormData;
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+  }
+
   formSubmit() {
-    document
-      .getElementById('submit-btn')
-      ?.addEventListener('click', (event) => {
-        event.preventDefault();
-        (document.getElementById('myForm') as HTMLFormElement)?.onSubmit();
-        alert('New project submitted!');
-      });
+    document.addEventListener('submit', (event) => {
+      event.preventDefault();
+      this.getFormData();
+      this.addProject();
+    });
   }
 }
 class ActiveProjectList extends ProjectBase {
