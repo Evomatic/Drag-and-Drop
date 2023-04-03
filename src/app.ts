@@ -1,4 +1,4 @@
-type ProjectInputData = {
+type ProjectInputData = Record<string, unknown | string> & {
   title: string;
   description: string;
   people: number;
@@ -7,6 +7,16 @@ type ProjectInputData = {
 type ProjectFormData = ProjectInputData & FormData;
 
 class ProjectBase {
+  formData: ProjectInputData;
+
+  constructor() {
+    this.formData = {
+      title: '',
+      description: '',
+      people: 0
+    };
+  }
+
   render(getElementById: string, elementPosition: InsertPosition): void {
     const templateElement = document.getElementById(
       getElementById
@@ -24,23 +34,28 @@ class ProjectInput extends ProjectBase {
     this.render('project-input', 'afterbegin');
   }
 
-  addProject() {
-    const newElement = document.createElement('li');
-    const newContent = document.createTextNode('Hi there and greetings!');
-    newElement.appendChild(newContent);
-    const currentDiv = document.getElementById('#ul');
-    document.body.insertBefore(newElement, currentDiv);
+  addProject(): void {
+    const formValues = Object.values(this.formData);
+    [...formValues].forEach((value) => {
+      const newListItem = document.createElement('li') as HTMLElement;
+      const listItemValue = document.createTextNode(value as string);
+      newListItem.appendChild(listItemValue);
+      const getActiveProjectById: HTMLElement = document.getElementById(
+        'active projects'
+      ) as HTMLElement;
+      getActiveProjectById.appendChild(newListItem);
+    });
   }
 
-  getFormData() {
+  getFormData(): void {
     const form = document.querySelector('#project-form') as HTMLFormElement;
     const formData: ProjectFormData = new FormData(form) as ProjectFormData;
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value);
+    for (const [property, value] of formData.entries()) {
+      this.formData[property] = value;
     }
   }
 
-  formSubmit() {
+  formSubmit(): void {
     document.addEventListener('submit', (event) => {
       event.preventDefault();
       this.getFormData();
