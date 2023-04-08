@@ -37,13 +37,13 @@ class ProjectInput extends ProjectBase {
   addProject(): void {
     const formValues = Object.values(this.formData);
     [...formValues].forEach((value) => {
-      const newListItem = document.createElement('li') as HTMLElement;
-      const listItemValue = document.createTextNode(value as string);
-      newListItem.appendChild(listItemValue);
-      const getActiveProjectById: HTMLElement = document.getElementById(
+      const newListElement = document.createElement('li') as HTMLElement;
+      const newValue = document.createTextNode(value as string);
+      newListElement.appendChild(newValue);
+      const currentDiv: HTMLElement = document.getElementById(
         'active projects'
       ) as HTMLElement;
-      getActiveProjectById.appendChild(newListItem);
+      currentDiv.appendChild(newValue);
     });
   }
 
