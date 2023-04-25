@@ -2,7 +2,7 @@
 type ProjectInputData = Record<string, unknown | string> & {
   title: string;
   description: string;
-  people: number;
+  people: string;
 };
 
 type ProjectFormData = ProjectInputData & FormData;
@@ -14,7 +14,7 @@ class ProjectBase {
     this.formData = {
       title: '',
       description: '',
-      people: 0
+      people: ''
     };
   }
 
@@ -44,24 +44,29 @@ class ProjectInput extends ProjectBase {
   }
 
   addProject(): void {
-    const formValues = Object.values(this.formData);
-    [...formValues].forEach((value, index) => {
-      const newListItem = this.createNewElement('li');
-      const newH2Element = this.createNewElement('h2');
-      const newH3Element = this.createNewElement('h3');
-      const newPElement = this.createNewElement('p');
+    const newListItem = this.createNewElement('li');
+    const { title, description, people } = this.formData;
 
-      const listItemValue = this.createNewTextNode(value as string);
-      const newH2Value = this.createNewTextNode(value as string);
-      const newH3Value = this.createNewTextNode(value as string);
-      const newPValue = this.createNewTextNode(value as string);
+    const newH2Element = this.createNewElement('h2');
+    const newH3Element = this.createNewElement('h3');
+    const newPElement = this.createNewElement('p');
 
-      newListItem.appendChild(listItemValue);
-      const getActiveProjectById: HTMLElement = document.getElementById(
-        'active projects'
-      ) as HTMLElement;
-      getActiveProjectById.appendChild(newListItem);
-    });
+    const newH2Value = this.createNewTextNode(title);
+    const newH3Value = this.createNewTextNode(description);
+    const newPValue = this.createNewTextNode(people);
+
+    newH2Element.appendChild(newH2Value);
+    newH3Element.appendChild(newH3Value);
+    newPElement.appendChild(newPValue);
+
+    newListItem.appendChild(newH2Element);
+    newListItem.appendChild(newH3Element);
+    newListItem.appendChild(newPElement);
+
+    const getActiveProjectById: HTMLElement = document.getElementById(
+      'active projects'
+    ) as HTMLElement;
+    getActiveProjectById.appendChild(newListItem);
   }
 
   getFormData(): void {
