@@ -92,6 +92,14 @@ class ActiveProjectList extends ProjectBase {
   }
 }
 
+class FinishedProjectList extends ProjectBase {
+  constructor() {
+    super();
+    this.render('finished-projects', 'beforeend');
+  }
+}
+
 const projectInput = new ProjectInput();
 projectInput.formSubmit();
 const activeProjectList = new ActiveProjectList();
+const finishedProject = new FinishedProjectList();
