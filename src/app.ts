@@ -18,6 +18,16 @@ class ProjectBase {
     };
   }
 
+  generateRandomId(): string {
+    const generateId = Math.random();
+    return generateId.toString();
+  }
+
+  dragstart_handler(dragEvent: DragEvent): void {
+    // Add the target element's id to the data transfer object
+    dragEvent.dataTransfer?.setData('text/plain', dragEvent.target?.id);
+  }
+
   createNewElement(element: string) {
     return document.createElement(element) as HTMLElement;
   }
@@ -62,6 +72,8 @@ class ProjectInput extends ProjectBase {
     newListItem.appendChild(newH2Element);
     newListItem.appendChild(newH3Element);
     newListItem.appendChild(newPElement);
+    newListItem.setAttribute('draggable', 'true');
+    newListItem.setAttribute('id', this.generateRandomId());
 
     const getActiveProjectById: HTMLElement = document.getElementById(
       'active projects'
