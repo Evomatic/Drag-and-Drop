@@ -23,9 +23,18 @@ class ProjectBase {
     return generateId.toString();
   }
 
-  dragstart_handler(dragEvent: DragEvent): void {
+  dragstart_handler(dragEvent?: DragEvent): void {
     // Add the target element's id to the data transfer object
-    dragEvent.dataTransfer?.setData('text/plain', dragEvent.target?.id);
+    dragEvent?.dataTransfer?.setData(
+      'text/plain',
+      (dragEvent.target as HTMLElement).id
+    );
+    dragEvent.dataTransfer.effectAllowed = 'move';
+    console.log('start dragging...');
+  }
+
+  dragend_handler() {
+
   }
 
   createNewElement(element: string) {
@@ -74,6 +83,8 @@ class ProjectInput extends ProjectBase {
     newListItem.appendChild(newPElement);
     newListItem.setAttribute('draggable', 'true');
     newListItem.setAttribute('id', this.generateRandomId());
+    newListItem.addEventListener('dragstart', this.dragstart_handler);
+    newListItem.addEventListener('dragend', this.dragend_handler);
 
     const getActiveProjectById: HTMLElement = document.getElementById(
       'active projects'
