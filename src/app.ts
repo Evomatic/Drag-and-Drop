@@ -16,7 +16,6 @@ class ProjectBase {
       description: '',
       people: ''
     };
-    this.droptarget_handler();
   }
 
   generateRandomId(): string {
@@ -24,70 +23,125 @@ class ProjectBase {
     return generateId.toString();
   }
 
-  dragstart_handler(dragEvent?: DragEvent): void {
-    // Add the target element's id to the data transfer object
-    dragEvent?.dataTransfer?.setData(
-      'text/plain',
-      (dragEvent.target as HTMLElement).id
-    );
-
-    if (dragEvent && dragEvent.dataTransfer) {
-      dragEvent.dataTransfer.effectAllowed = 'move';
-    }
+  handleDragStart(event: Event): void {
+    const dragElement = event.target as Element;
+    dragElement.classList.add('dragging');
     console.log('start dragging...');
   }
 
-  droptarget_handler(): void {
-    const targetElements = document.getElementById(
-      'finished-projects'
-    ) as HTMLUListElement;
-
-    targetElements.addEventListener('dragenter', this.dragEnter);
-    targetElements.addEventListener('dragover', this.dragOver);
-    targetElements.addEventListener('dragleave', this.dragLeave);
-    targetElements.addEventListener('drop', this.drop);
+  handleDragEnd(event: Event): void {
+    const dragElement = event.target as Element;
+    dragElement.classList.remove('dragging');
+    console.log('end dragging...');
   }
 
-  dragEnter(e: Event) {
-    e.preventDefault();
-    if (e.target) {
-      const target = e.target as Element;
-      target.classList.add('drag-over');
+  handleDragOver() {
+    const dragOverContainer = document.querySelectorAll(
+      '.drop-target'
+    ) as NodeListOf<Element>;
+    dragOverContainer.forEach((container) => {
+      container.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        const afterElement = this.getDragAfterElement(
+          container,
+          (event as MouseEvent).clientY
+        );
+        const draggable = document.querySelector('.dragging') as Element;
+        if (afterElement == null) {
+          container.appendChild(draggable);
+        } else {
+          container.insertBefore(draggable, afterElement);
+        }
+      });
+    });
+  }
+
+  getDragAfterElement(container: any, y: any) {
+    const draggableElements = [
+      ...container.querySelectorAll('.draggable:not(.dragging)')
+    ];
+
+    if (draggableElements.length > 0) {
+      return draggableElements.reduce(
+        (closest, child) => {
+          const box = child.getBoundingClientRect();
+          const offset = y - box.top - box.height / 2;
+
+          if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+          } else {
+            return offset;
+          }
+        },
+        { offest: Number.NEGATIVE_INFINITY }
+      ).element;
     }
   }
 
-  dragOver(e: Event) {
-    e.preventDefault();
-    if (e.target) {
-      const target = e.target as Element;
-      target.classList.add('drag-over');
-    }
-  }
+  // dragstart_handler(dragEvent?: DragEvent): void {
+  //   // Add the target element's id to the data transfer object
+  //   dragEvent?.dataTransfer?.setData(
+  //     'text/plain',
+  //     (dragEvent.target as HTMLElement).id
+  //   );
 
-  dragLeave(e: Event) {
-    if (e.target) {
-      const target = e.target as Element;
-      target.classList.remove('drag-over');
-    }
-  }
+  //   if (dragEvent && dragEvent.dataTransfer) {
+  //     dragEvent.dataTransfer.effectAllowed = 'move';
+  //   }
+  //   console.log('start dragging...');
+  // }
 
-  drop(e: any) {
-    if (e.target) {
-      const target = e.target as Element;
-      target.classList.remove('drag-over');
-    }
+  // droptarget_handler(): void {
+  //   const targetElements = document.getElementById(
+  //     'finished-projects'
+  //   ) as HTMLUListElement;
 
-    // get the draggable element
-    const id = e.dataTransfer.getData('text/plain');
-    console.log('id', id);
-    const draggable = document.getElementById(id);
+  //   targetElements.addEventListener('dragenter', this.dragEnter);
+  //   targetElements.addEventListener('dragover', this.dragOver);
+  //   targetElements.addEventListener('dragleave', this.dragLeave);
+  //   targetElements.addEventListener('drop', this.drop);
+  // }
 
-    // add it to the drop target
-    e.target.appendChild(draggable);
+  // dragEnter(e: Event) {
+  //   e.preventDefault();
+  //   if (e.target) {
+  //     const target = e.target as Element;
+  //     target.classList.add('drag-over');
+  //   }
+  // }
 
-    // display the draggable element
-    draggable?.classList.remove('hide');
-  }
+  // dragOver(e: Event) {
+  //   e.preventDefault();
+  //   if (e.target) {
+  //     const target = e.target as Element;
+  //     target.classList.add('drag-over');
+  //   }
+  // }
+
+  // dragLeave(e: Event) {
+  //   if (e.target) {
+  //     const target = e.target as Element;
+  //     target.classList.remove('drag-over');
+  //   }
+  // }
+
+  // drop(e: any) {
+  //   if (e.target) {
+  //     const target = e.target as Element;
+  //     target.classList.remove('drag-over');
+  //   }
+
+  //   // get the draggable element
+  //   const id = e.dataTransfer.getData('text/plain');
+  //   console.log('id', id);
+  //   const draggable = document.getElementById(id);
+
+  //   // add it to the drop target
+  //   e.target.appendChild(draggable);
+
+  //   // display the draggable element
+  //   draggable?.classList.remove('hide');
+  // }
 
   createNewElement(element: string) {
     return document.createElement(element) as HTMLElement;
@@ -135,7 +189,9 @@ class ProjectInput extends ProjectBase {
     newListItem.appendChild(newPElement);
     newListItem.setAttribute('draggable', 'true');
     newListItem.setAttribute('id', this.generateRandomId());
-    newListItem.addEventListener('dragstart', this.dragstart_handler);
+    newListItem.setAttribute('class', 'draggable');
+    newListItem.addEventListener('dragstart', this.handleDragStart);
+    newListItem.addEventListener('dragend', this.handleDragEnd);
     // newListItem.addEventListener('dragend', this.dragend_handler);
 
     const getActiveProjectById: HTMLElement = document.getElementById(
@@ -171,6 +227,7 @@ class FinishedProjectList extends ProjectBase {
   constructor() {
     super();
     this.render('finished-projects', 'beforeend');
+    this.handleDragOver();
   }
 }
 
