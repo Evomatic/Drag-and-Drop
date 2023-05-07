@@ -56,26 +56,24 @@ class ProjectBase {
     });
   }
 
-  getDragAfterElement(container: any, y: any) {
+  getDragAfterElement(container: any, y: number): HTMLLIElement {
     const draggableElements = [
       ...container.querySelectorAll('.draggable:not(.dragging)')
     ];
 
-    if (draggableElements.length > 0) {
-      return draggableElements.reduce(
-        (closest, child) => {
-          const box = child.getBoundingClientRect();
-          const offset = y - box.top - box.height / 2;
+    return draggableElements.reduce(
+      (closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
 
-          if (offset < 0 && offset > closest.offset) {
-            return { offset: offset, element: child };
-          } else {
-            return offset;
-          }
-        },
-        { offest: Number.NEGATIVE_INFINITY }
-      ).element;
-    }
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child };
+        } else {
+          return closest;
+        }
+      },
+      { offset: Number.NEGATIVE_INFINITY }
+    ).element;
   }
 
   createNewElement(element: string) {
@@ -112,8 +110,8 @@ class ProjectInput extends ProjectBase {
     const newPElement = this.createNewElement('p');
 
     const newH2Value = this.createNewTextNode(title);
-    const newH3Value = this.createNewTextNode(description);
-    const newPValue = this.createNewTextNode(people);
+    const newH3Value = this.createNewTextNode(`${people} persons assigned`);
+    const newPValue = this.createNewTextNode(description);
 
     newH2Element.appendChild(newH2Value);
     newH3Element.appendChild(newH3Value);
