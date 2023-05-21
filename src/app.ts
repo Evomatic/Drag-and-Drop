@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
+import './app.less';
+
 type ProjectInputData = Record<string, unknown | string> & {
   title: string;
   description: string;
@@ -190,5 +193,5 @@ class FinishedProjectList extends ProjectBase {
 
 const projectInput = new ProjectInput();
 projectInput.formSubmit();
-const activeProjectList = new ActiveProjectList();
-const finishedProject = new FinishedProjectList();
+new ActiveProjectList();
+new FinishedProjectList();
