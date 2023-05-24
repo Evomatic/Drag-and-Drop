@@ -2,10 +2,19 @@ const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+  mode: 'development',
   entry: './src/app.ts',
+  devServer: {
+    static: [
+      {
+        directory: path.join(__dirname),
+      },
+    ],
+  },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/dist/'
   },
   devtool: 'inline-source-map',
   plugins: [new MiniCssExtractPlugin()],
@@ -20,7 +29,12 @@ module.exports = {
         test: /\.less$/i,
         use: [
             'style-loader',
-             MiniCssExtractPlugin.loader,
+             {
+               loader: MiniCssExtractPlugin.loader,
+               options: {
+                esModule: false,
+               }
+             },
             'css-loader',
             'less-loader'
         ],
@@ -30,5 +44,5 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js']
-  }
+  },
 };

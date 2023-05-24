@@ -4,8 +4,8 @@
   "description": "A simple drag and drop project",
   "main": "app.js",
   "scripts": {
-    "build": "webpack",
-    "start": "serve",
+    "build": "webpack --config webpack.config.prod.js",
+    "start": "webpack-dev-server",
     "watch": "tsc -w",
     "lint": "eslint --ext .ts src/",
     "prettier": "prettier --config .prettierrc 'src/' --write",
@@ -20,6 +20,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.54.0",
+    "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.4",
     "eslint": "^8.35.0",
     "eslint-config-prettier": "^8.7.0",
@@ -35,6 +36,5 @@
     "webpack": "^5.83.1",
     "webpack-cli": "^5.1.1",
     "webpack-dev-server": "^4.15.0"
-  },
-  "dependencies": {}
+  }
 }
